@@ -1,9 +1,13 @@
-const {response} = require('express') // esto es para poder tener los metodos del res, sin esto no aparecen 
+const {response, request} = require('express') // esto es para poder tener los metodos del res, sin esto no aparecen 
 
-const usuariosGET = (req, res = response) => { 
+const usuariosGET = (req = request, res = response) => { 
+    const {nombre,apellido,edad} = req.query
     res.json(
         {
-            msg: 'get API - controller'
+            msg: 'get API - controller',
+            nombre,
+            apellido,
+            edad
         }
     )
 }
