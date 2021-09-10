@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { dbConnection } = require('../database/config')
 class Server {
 
     constructor(){
@@ -7,6 +8,8 @@ class Server {
         this.port = process.env.PORT
         this.usersRoutes = '/api/users'
 
+        //Conectar a base de datos
+        this.dbConnection()
         //Middlewares funcion que siempre se ejecuta cuando levantemos el servidor
         this.middlewares()
         //Rutas de mi app
@@ -34,6 +37,10 @@ class Server {
         this.app.listen(this.port, () => {
             console.log(`App listening at http://localhost:${this.port}`)
           })
+    }
+
+    async dbConnection() {
+        await dbConnection()
     }
 }
 
