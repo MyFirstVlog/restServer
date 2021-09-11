@@ -5,14 +5,31 @@ const User = require('../models/user') // U mayuscula para crear instancias del 
 
 
 
-const usuariosGET = (req = request, res = response) => { 
-    const {nombre,apellido,edad} = req.query
+const usuariosGET = async(req = request, res = response) => { 
+    //const {nombre,apellido,edad} = req.query
+    const {limite = 5, desde = 0} = req.query
+    //console.log([{limite}, {desde}])
+    
+    /*const usuarios = await User.find({estado : true}) // dentro recibe condiciones tipo objetos 
+    .skip(Number(desde))
+    .limit(Number(limite))
+
+    const total = await User.countDocuments({estado : true})*/
+
+    //es importante mencionar que para evistar que los dos await ralenticen mi codigo y como un await no depende de la realizacion del otro 
+    //entonces uso promise.all
+
+    const [total, usuarios] = await Promise.all([ // la rta es una coleccion de las dos promesas
+        User.countDocuments({estado : true}),
+        User.find({estado : true}) // dentro recibe condiciones tipo objetos 
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ])
+
     res.json(
         {
-            msg: 'get API - controller',
-            nombre,
-            apellido,
-            edad
+           total,
+           usuarios
         }
     )
 }
@@ -21,14 +38,6 @@ const usuariosPOST = async(req, res = response) => {
 
     const {nombre,correo,password,role} = req.body 
     const usuario = new User({nombre,correo,password,role})
-
-    //verificar si el correo existe
-    const existeEmail = await User.findOne({correo})
-    if(existeEmail){
-        return res.status(404).json({
-            msg:"email already registered"
-        })
-    }
     //hash de la contraseña 
     const salt = bcryptjs.genSaltSync()
     usuario.password = bcryptjs.hashSync(password,salt)
@@ -43,23 +52,38 @@ const usuariosPOST = async(req, res = response) => {
     )
 }
 
-const usuariosPUT = (req, res = response) => { 
+const usuariosPUT = async (req, res = response) => { 
 
     const idURL = req.params.id
+    const {__id,password, google, correo, ...resto} = req.body
+
+    //TODO validar en db
+    if(password){
+        //hash de la contraseña 
+        const salt = bcryptjs.genSaltSync()
+        resto.password = bcryptjs.hashSync(password,salt)
+    }
+
+    const usuario = await User.findByIdAndUpdate(idURL, resto)
+
     res.json(
         {
             msg: 'put API - controller',
-            idURL
+            usuario
         }
     )
 }
 
-const usuariosDELETE = (req, res = response) => { 
-    res.json(
-        {
-            msg: 'delete API - controller'
-        }
-    )
+const usuariosDELETE = async(req, res = response) => { 
+    const {id} = req.params
+
+    //fisicamente lo borramos
+    //const usuario = await User.findByIdAndDelete(id)
+
+    const usuario = await User.findByIdAndUpdate(id, {estado:false})
+
+
+    res.json(usuario)
 }
 const usuariosPATCH = (req, res = response) => { 
     res.json(

@@ -31,6 +31,11 @@ const  userSchema = Schema ({
     }
 
 })
+//los metodos aqui pueden servir para sobreescribir metodos por defectos como el findOne, o crear personalizados dependiendo las exigencias
 
+userSchema.methods.toJSON = function(){ // debe ser una fn normal, porque usarenmos el this, que solo se enfoca en el scope interno, una funcion de 
+      const {__v, password, ...usuario} = this.toObject() 
+      return usuario                                //usa el this de afuera
+}
 
 module.exports = model('User',userSchema)
