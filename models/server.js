@@ -8,6 +8,8 @@ class Server {
         this.port = process.env.PORT
         this.usersRoutes = '/api/users'
 
+        this.authPath = '/api/auth'
+
         //Conectar a base de datos
         this.dbConnection()
         //Middlewares funcion que siempre se ejecuta cuando levantemos el servidor
@@ -30,6 +32,7 @@ class Server {
     }
 
     routes(){
+        this.app.use(this.authPath, require('../routes/auth'))
         this.app.use(this.usersRoutes, require('../routes/user'))
     }
 
