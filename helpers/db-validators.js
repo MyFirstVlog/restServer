@@ -1,3 +1,4 @@
+const { Producto } = require('../models')
 const Role = require('../models/role')
 const User = require('../models/user')
 
@@ -22,10 +23,19 @@ const existeUsuarioPorID = async (id = '') =>{
     }
     
 }
+const existeProducto = async( id = '') => {
+
+    const usuario = await Producto.findById(id)
+
+    if(!usuario){
+        throw new Error('El producto que trata de buscar no esta en la dB')
+    }
+}
 
 
 module.exports = {
     esRoleValido,
     emailExiste,
-    existeUsuarioPorID
+    existeUsuarioPorID,
+    existeProducto
 }
