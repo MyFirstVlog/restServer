@@ -25,7 +25,8 @@ const   productoSchema = Schema({
         required : true
     },
     descripcion : {type: String},
-    disponible : {type : Boolean , default : true}
+    disponible : {type : Boolean , default : true},
+    img : {type : String}
 })
 
 productoSchema.methods.toJSON = function(){ // debe ser una fn normal, porque usarenmos el this, que solo se enfoca en el scope interno, una funcion de 

@@ -32,10 +32,26 @@ const existeProducto = async( id = '') => {
     }
 }
 
+/**
+ * validar coleccionwes perimitidas
+ */
+
+const coleccionesPermitidas = ( coleccion = '', colecciones = []) => {
+    
+    const incluida = colecciones.includes(coleccion)
+    if(!incluida){
+        throw new Error('coleccion no permitida, las pemritidas son: ' + colecciones )
+    }
+
+    //como es un custom validator donde la funcion recibe argumentos debemos enviar un true en return, en los de arriba se hacia implicitamente
+    //deberiamos ponerle true en todas
+    return true
+}
 
 module.exports = {
     esRoleValido,
     emailExiste,
     existeUsuarioPorID,
-    existeProducto
+    existeProducto,
+    coleccionesPermitidas
 }
