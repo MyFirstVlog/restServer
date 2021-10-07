@@ -12,4 +12,9 @@ En postman implemente las pruebas de dicha aplicacion y explico como usar cada r
 
 Recordar que en GitHub no estan las variables de entorno que tienes las claves de las api's por buenas practicas se omite este archivo, si se solicitan aqui les dejo mi correo y con mucho gusto facilitare --> alejandro.estradam@udea.edu.co
 
+Implementación en heroku:
+
+https://rest-server-aem.herokuapp.com/
+
+
 Recuerda que cuando lo clones se debe hacer ``` npm install ``` para descargar todos los node modules necesario para la implementacion del codigo
