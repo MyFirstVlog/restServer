@@ -10,6 +10,6 @@ de google para poder autenticar al uuario mediante otra estrategia diferente.
 
 En postman implemente las pruebas de dicha aplicacion y explico como usar cada request, verificar siguiente link de la documentacion: https://documenter.getpostman.com/view/17573387/UUxtDqN6
 
-Recordar que en GitHub no estan las variables de entorno que tienes las claves de las api's por buenas practicas se omite este archivo, si se solicitan aqui les dejo mi correo y con mucho gusto facilitare --> alejandro.estradam@udae.edu.co
+Recordar que en GitHub no estan las variables de entorno que tienes las claves de las api's por buenas practicas se omite este archivo, si se solicitan aqui les dejo mi correo y con mucho gusto facilitare --> alejandro.estradam@udea.edu.co
 
 Recuerda que cuando lo clones se debe hacer ``` npm install ``` para descargar todos los node modules necesario para la implementacion del codigo
